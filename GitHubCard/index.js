@@ -1,14 +1,14 @@
-import axios from 'axios';
+/* import axios from 'axios'; */
 
-// variables holding data from github
+/* // variables holding data from github
 let name = ''
 let imgSrc = ''
 let userName = ''
 let location = ''
 let url = ''
-let followers = ''
+let followers = '' */
 
-//import axios from 'axios';
+
 /* Step 1: using axios, send a GET request to the following URL 
            (replacing the placeholder with your Github name):
            https://api.github.com/users/<your name>
@@ -18,14 +18,16 @@ axios
 .then((res) => {
 // this probably returns a 200 status code
   //console.log(res)
-  userName = res.data.login 
-  name = res.data.name
-  imgSrc = res.data.avatar_url
-  userName = res.data.login
-  location = res.data.location
-  url = res.data.url
-  followers = res.data.followers_url
-  console.log(followers)
+  
+  const name = res.data.name
+  const imgSrc = res.data.avatar_url
+  const userName = res.data.login
+  const location = res.data.location
+  const url = res.data.url
+  const followers = res.data.followers
+  const following = res.data.following
+  const bio = res.data.bio
+  //console.log(res.data)
 
 
 
@@ -108,27 +110,47 @@ function GitHubCard(obj){
   // style elements
 
   cardDiv.classList.add('card')
-  imageImg.src = imgSrc
+  imageImg.src = obj.image
   cardInfoDiv.classList.add('card-info')
   nameH3.classList.add('name')
-  nameH3.textContent = name
-  userNameP.classList.add('username')
-  userNameP.textContent = userName
-  locationP.textContent = `Location: $(location)`
+  nameH3.textContent = obj.name
+  userNameP.classList.add('obj.username')
+  userNameP.textContent = obj.userName
+  locationP.textContent = `Location: ${obj.location}`
   profileP.textContent = 'Profile:'
-  addressA.href = url
-  addressA.textContent = url
-  followersP.textContent = `Followers: $(followers)` 
+  addressA.href = obj.url
+  addressA.textContent = obj.url
+  followersP.textContent = `Followers: ${obj.followers}` 
+  followingP.textContent = `Following: ${obj.following}` 
+  bioP.textContent = `Bio: ${obj.bio}`
+
+  // structure component
+
+  cardDiv.appendChild(imageImg)
+  cardDiv.appendChild(cardInfoDiv)
+  cardInfoDiv.appendChild(nameH3)
+  cardInfoDiv.appendChild(userNameP)
+  cardInfoDiv.appendChild(locationP)
+  cardInfoDiv.appendChild(profileP)
+  cardInfoDiv.appendChild(followersP)
+  cardInfoDiv.appendChild(followingP)
+  cardInfoDiv.appendChild(bioP)
+  profileP.appendChild(addressA)
+
+  
+
+
   
   
   
  
 
-
+ return newGitHubCard
   
 
 
 }
+
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
