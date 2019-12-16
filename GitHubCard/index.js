@@ -8,48 +8,51 @@
            https://api.github.com/users/<your name>
 */
 axios
-.get("https://api.github.com/users/squarerobin")
-.then((res) => {
-// this probably returns a 200 status code
-  //console.log(res)
-  
-  const name = res.data.name
-  const image = res.data.avatar_url
-  const userName = res.data.login
-  const location = res.data.location
-  const url = res.data.html_url
-  const followers = res.data.followers
-  const following = res.data.following
-  const bio = res.data.bio
-  console.log(res.data)
+  .get("https://api.github.com/users/squarerobin")
+  .then((res) => {
+    // this probably returns a 200 status code
+    //console.log(res)
 
-  //GitHubCard()
+    const name = res.data.name
+    const image = res.data.avatar_url
+    const userName = res.data.login
+    const location = res.data.location
+    const url = res.data.html_url
+    const followers = res.data.followers
+    const following = res.data.following
+    const bio = res.data.bio
+    console.log(res.data)
 
-  const info = {
-    image: image,
-    name: name,
-    userName: userName,
-    location: location,
-    url: url,
-    followers: followers,
-    following: following,
-    bio: bio
-  }
+    //GitHubCard()
 
-  const newGitHubCard =  GitHubCard(info)
-  cards.appendChild(newGitHubCard)
+    const info = {
+      image: image,
+      name: name,
+      userName: userName,
+      location: location,
+      url: url,
+      followers: followers,
+      following: following,
+      bio: bio
+    }
 
-  
+    const newGitHubCard = GitHubCard(info)
+    cards.appendChild(newGitHubCard)
 
 
 
 
 
-})
-.catch((err) => {
-// this probably returns either a 400 or 500 status code
-  console.log('You hit an error: ', err);
-});
+
+
+  })
+  .catch((err) => {
+    // this probably returns either a 400 or 500 status code
+    console.log('You hit an error: ', err);
+  });
+
+
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -65,14 +68,59 @@ axios
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
           , manually find some other users' github handles, or use the list found 
           at the bottom of the page. Get at least 5 different Github usernames and add them as
-          Individual strings to the friendsArray below.
+          Individual strings to the followersArray below.
           
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
 
 const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+for (let i = 0; i < followersArray.length; i++) {
 
+  axios
+    .get(`https://api.github.com/users/${followersArray[i]}`)
+    .then((res) => {
+      // this probably returns a 200 status code
+      //console.log(res)
+
+      const name = res.data.name
+      const image = res.data.avatar_url
+      const userName = res.data.login
+      const location = res.data.location
+      const url = res.data.html_url
+      const followers = res.data.followers
+      const following = res.data.following
+      const bio = res.data.bio
+      console.log(res.data)
+
+      //GitHubCard()
+
+      const info = {
+        image: image,
+        name: name,
+        userName: userName,
+        location: location,
+        url: url,
+        followers: followers,
+        following: following,
+        bio: bio
+      }
+
+      const newGitHubCard = GitHubCard(info)
+      cards.appendChild(newGitHubCard)
+
+
+
+
+
+
+
+    })
+    .catch((err) => {
+      // this probably returns either a 400 or 500 status code
+      console.log('You hit an error: ', err);
+    });
+}
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -94,11 +142,12 @@ const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigkne
 */
 
 const cards = document.querySelector('.cards')
-function GitHubCard(obj){
+
+function GitHubCard(obj) {
 
 
 
-  
+
 
   // create elements
 
@@ -116,7 +165,7 @@ function GitHubCard(obj){
 
   // style elements
 
-  
+
   newGitHubCard.classList.add('card')
   imageImg.src = obj.image
   cardInfoDiv.classList.add('card-info')
@@ -128,8 +177,8 @@ function GitHubCard(obj){
   profileP.textContent = 'Profile:'
   addressA.href = obj.url
   addressA.textContent = obj.url
-  followersP.textContent = `Followers: ${obj.followers}` 
-  followingP.textContent = `Following: ${obj.following}` 
+  followersP.textContent = `Followers: ${obj.followers}`
+  followingP.textContent = `Following: ${obj.following}`
   bioP.textContent = `Bio: ${obj.bio}`
 
   // structure component
@@ -145,16 +194,16 @@ function GitHubCard(obj){
   cardInfoDiv.appendChild(bioP)
   profileP.appendChild(addressA)
 
-  
 
 
-  
-  
-  
- 
 
- return newGitHubCard
-  
+
+
+
+
+
+  return newGitHubCard
+
 
 
 }
