@@ -21,7 +21,7 @@ axios
     const followers = res.data.followers
     const following = res.data.following
     const bio = res.data.bio
-    console.log(res.data)
+    //console.log(res.data)
 
     //GitHubCard()
 
@@ -36,8 +36,8 @@ axios
       bio: bio
     }
 
-    const newGitHubCard = GitHubCard(info)
-    cards.appendChild(newGitHubCard)
+    //const newGitHubCard = GitHubCard(info)
+   // cards.appendChild(newGitHubCard)
 
 
 
@@ -74,53 +74,90 @@ axios
           user, and adding that card to the DOM.
 */
 
-const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
-for (let i = 0; i < followersArray.length; i++) {
-
-  axios
-    .get(`https://api.github.com/users/${followersArray[i]}`)
-    .then((res) => {
-      // this probably returns a 200 status code
-      //console.log(res)
-
-      const name = res.data.name
-      const image = res.data.avatar_url
-      const userName = res.data.login
-      const location = res.data.location
-      const url = res.data.html_url
-      const followers = res.data.followers
-      const following = res.data.following
-      const bio = res.data.bio
-      console.log(res.data)
-
-      //GitHubCard()
-
-      const info = {
-        image: image,
-        name: name,
-        userName: userName,
-        location: location,
-        url: url,
-        followers: followers,
-        following: following,
-        bio: bio
-      }
-
-      const newGitHubCard = GitHubCard(info)
-      cards.appendChild(newGitHubCard)
+const followersArray = []
 
 
+// STRETCH: get followers programmatically
+axios
+  .get(`https://api.github.com/users/squarerobin/followers`)
+  .then((res) => {
+    // console.log(res.data)
+    for (let i = 0; i < res.data.length; i++) {
+
+      followersArray.push(res.data[i].login)
+
+    }
+
+
+  }).then((res) =>{
+    for (let i = 0; i < followersArray.length; i++) {
+
+
+      axios
+        .get(`https://api.github.com/users/${followersArray[i]}`)
+        .then((res) => {
+          // this probably returns a 200 status code
+          console.log(res)
+    
+          const name = res.data.name
+          const image = res.data.avatar_url
+          const userName = res.data.login
+          const location = res.data.location
+          const url = res.data.html_url
+          const followers = res.data.followers
+          const following = res.data.following
+          const bio = res.data.bio
+          console.log(res.data)
+    
+          //GitHubCard()
+    
+          const info = {
+            image: image,
+            name: name,
+            userName: userName,
+            location: location,
+            url: url,
+            followers: followers,
+            following: following,
+            bio: bio
+          }
+    
+          const newGitHubCard = GitHubCard(info)
+          cards.appendChild(newGitHubCard)
+    
+    
+    
+    
+    
+    
+    
+        })
+        .catch((err) => {
+          // this probably returns either a 400 or 500 status code
+          console.log('You hit an error: ', err);
+        });
+    }
+
+
+  })
+
+  .catch((err) => {
+    // this probably returns either a 400 or 500 status code
+    console.log('You hit an error: ', err);
+  });
+
+console.log(followersArray)
 
 
 
 
 
-    })
-    .catch((err) => {
-      // this probably returns either a 400 or 500 status code
-      console.log('You hit an error: ', err);
-    });
-}
+
+
+
+
+
+
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
