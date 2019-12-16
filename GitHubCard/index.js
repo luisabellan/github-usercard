@@ -1,12 +1,6 @@
 /* import axios from 'axios'; */
 
-/* // variables holding data from github
-let name = ''
-let imgSrc = ''
-let userName = ''
-let location = ''
-let url = ''
-let followers = '' */
+
 
 
 /* Step 1: using axios, send a GET request to the following URL 
@@ -20,28 +14,37 @@ axios
   //console.log(res)
   
   const name = res.data.name
-  const imgSrc = res.data.avatar_url
+  const image = res.data.avatar_url
   const userName = res.data.login
   const location = res.data.location
-  const url = res.data.url
+  const url = res.data.html_url
   const followers = res.data.followers
   const following = res.data.following
   const bio = res.data.bio
-  //console.log(res.data)
+  console.log(res.data)
+
+  //GitHubCard()
+
+  const info = {
+    image: image,
+    name: name,
+    userName: userName,
+    location: location,
+    url: url,
+    followers: followers,
+    following: following,
+    bio: bio
+  }
+
+  const newGitHubCard =  GitHubCard(info)
+  cards.appendChild(newGitHubCard)
+
+  
 
 
 
 
 
-
-
-  //const img = res.data.
-  //console.log(userName) 
-  /* const dogList = res.data.message;
-  dogList.forEach((dog) => {
-    const newDogCard = DogCard(dog);
-    entry.appendChild(newDogCard);
-  }); */
 })
 .catch((err) => {
 // this probably returns either a 400 or 500 status code
@@ -90,12 +93,16 @@ const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigkne
 
 */
 
-
+const cards = document.querySelector('.cards')
 function GitHubCard(obj){
+
+
+
+  
 
   // create elements
 
-  const cardDiv = document.createElement('div')
+  const newGitHubCard = document.createElement('div')
   const imageImg = document.createElement('img')
   const cardInfoDiv = document.createElement('div')
   const nameH3 = document.createElement('h3')
@@ -109,12 +116,13 @@ function GitHubCard(obj){
 
   // style elements
 
-  cardDiv.classList.add('card')
+  
+  newGitHubCard.classList.add('card')
   imageImg.src = obj.image
   cardInfoDiv.classList.add('card-info')
   nameH3.classList.add('name')
   nameH3.textContent = obj.name
-  userNameP.classList.add('obj.username')
+  userNameP.classList.add('username')
   userNameP.textContent = obj.userName
   locationP.textContent = `Location: ${obj.location}`
   profileP.textContent = 'Profile:'
@@ -126,8 +134,8 @@ function GitHubCard(obj){
 
   // structure component
 
-  cardDiv.appendChild(imageImg)
-  cardDiv.appendChild(cardInfoDiv)
+  newGitHubCard.appendChild(imageImg)
+  newGitHubCard.appendChild(cardInfoDiv)
   cardInfoDiv.appendChild(nameH3)
   cardInfoDiv.appendChild(userNameP)
   cardInfoDiv.appendChild(locationP)
