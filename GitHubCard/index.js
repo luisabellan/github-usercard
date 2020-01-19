@@ -1,4 +1,6 @@
-/* import axios from 'axios'; */
+/* import axios from 'axios';
+we are using cdn this time (see <script> before body in index.html)
+ */
 
 
 
