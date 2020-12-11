@@ -1,5 +1,5 @@
 
-Deployed here: https://github-usercard.squarerobin.now.sh
+Deployed here: https://github-usercardsss.netlify.app
 
 
 # Github User Cards
